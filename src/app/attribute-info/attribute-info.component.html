@@ -1,0 +1,12 @@
+<div *ngIf="attribute">
+  <h2>{{attribute.name}} details!</h2>
+  <div><label>ID: </label>{{attribute.id}}</div>
+  <div>
+    <label>Name: </label>
+    <input [(ngModel)]="attribute.name" placeholder="Name" (input)="onInput()" />
+  </div>
+  <div>
+    <label>From Table: </label>
+    <input [(ngModel)]="attribute.fromTable" placeholder="From Table" (input)="onInput()" />
+  </div>
+</div>

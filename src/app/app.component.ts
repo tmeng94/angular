@@ -1,13 +1,13 @@
-import { Component } from '@angular/core';
-import { Bike } from './bike';
+import {Component, OnInit} from '@angular/core';
+import { Attribute } from './attribute';
+import { Result } from './result';
 
-
-const BIKES: Bike[] = [
-  { id: 1, model: 'CBR250R', manufacturer: 'Honda' },
-  { id: 2, model: 'CBR150R', manufacturer: 'Honda' },
-  { id: 3, model: 'Ninja250R', manufacturer: 'Kawasaki' },
-  { id: 4, model: 'CBR1000R', manufacturer: 'Honda' },
-  { id: 5, model: 'Ninja1000RR', manufacturer: 'Kawasaki' }
+const ATTRIBUTES: Attribute[] = [
+  { id: 1, name: 'id', fromTable: 'Game' },
+  { id: 2, name: 'name', fromTable: 'Game' },
+  { id: 3, name: 'id', fromTable: 'Company' },
+  { id: 4, name: 'name', fromTable: 'Company' },
+  { id: 5, name: 'region', fromTable: 'Company' }
 ];
 
 @Component({
@@ -15,11 +15,26 @@ const BIKES: Bike[] = [
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'Bikes Showroom';
-  bikes = BIKES;
-  selectedBike: Bike;
-  onSelect(bike: Bike): void {   
-    this.selectedBike = bike;
+export class AppComponent implements OnInit {
+  title = 'Attributes Showroom';
+  attributes = ATTRIBUTES;
+  selectedAttr: Attribute;
+  resultQuery: Result;
+  ngOnInit(): void {
+    this.resultQuery = new Result();
+    this.updateQueryString();
+  }
+  onSelect(attr: Attribute): void {
+    this.selectedAttr = attr;
+  }
+  update(event: Event): void {
+    this.updateQueryString();
+  }
+  updateQueryString(): void {
+    this.resultQuery.string = JSON.stringify({
+      'attributes': this.attributes,
+      'conditions': [],
+      'aggregations': []
+    }, null, 2);
   }
 }

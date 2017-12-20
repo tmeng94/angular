@@ -4,15 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import { BikeComponent } from './bike/bike.component';
-import { BikeInfoComponent } from './bike-info/bike-info.component';
+import { AttributeComponent } from './attribute/attribute.component';
+import { AttributeInfoComponent } from './attribute-info/attribute-info.component';
+import { ConditionComponent } from './condition/condition.component';
+import { ConditionInfoComponent } from './condition-info/condition-info.component';
+import { ResultComponent } from './result/result.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BikeComponent,
-    BikeInfoComponent,
+    AttributeComponent,
+    AttributeInfoComponent,
+    ConditionComponent,
+    ConditionInfoComponent,
+    ResultComponent,
   ],
   imports: [
     BrowserModule,
