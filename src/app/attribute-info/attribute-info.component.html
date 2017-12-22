@@ -1,12 +1,39 @@
 <div *ngIf="attribute">
-  <h2>{{attribute.name}} details!</h2>
-  <div><label>ID: </label>{{attribute.id}}</div>
-  <div>
-    <label>Name: </label>
-    <input [(ngModel)]="attribute.name" placeholder="Name" (input)="onInput()" />
-  </div>
-  <div>
-    <label>From Table: </label>
-    <input [(ngModel)]="attribute.fromTable" placeholder="From Table" (input)="onInput()" />
-  </div>
+  <h2 class="mat-headline">Detail of {{attribute.from}}.{{attribute.name}}:</h2>
+  <!--<div><label>ID: </label>{{attribute.id}}</div>-->
+  <form>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="attribute.from"
+             name="From Table"
+             placeholder="From Table"
+             (input)="onInput()" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="attribute.name"
+             name="Name"
+             placeholder="Name"
+             (input)="onInput()" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="attribute.alias"
+             name="Alias"
+             placeholder="Alias"
+             (input)="onInput()" />
+    </mat-form-field>
+  </form>
+  <!--<div>-->
+    <!--<label>Name: </label>-->
+    <!--<input [(ngModel)]="attribute.name" placeholder="Name" (input)="onInput()" />-->
+  <!--</div>-->
+  <!--<div>-->
+    <!--<label>From Table: </label>-->
+    <!--<input [(ngModel)]="attribute.from" placeholder="From Table" (input)="onInput()" />-->
+  <!--</div>-->
+  <!--<div>-->
+    <!--<label>Alias: </label>-->
+    <!--<input [(ngModel)]="attribute.alias" placeholder="Alias" (input)="onInput()" />-->
+  <!--</div>-->
 </div>

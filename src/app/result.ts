@@ -1,3 +1,4 @@
 export class Result {
-  string: String
+  query: Object;
+  // string: String
 }

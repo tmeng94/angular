@@ -1,9 +1,45 @@
-<h1>{{title}}</h1>
-<h2>Attributes</h2>
+<h1 class="mat-display-1">{{title}}</h1>
+<h2 class="mat-headline">
+  Attributes
+  <button mat-raised-button (click)="addAttribute()">New</button>
+</h2>
 <ul>
-  <li *ngFor="let attr of attributes" (click)="onSelect(attr)">
-    {{attr.name}}
+  <li class="list-item" *ngFor="let attr of attributes" (click)="onSelectAttr(attr)">
+    {{attr.getStr()}}
   </li>
 </ul>
 <app-attribute-info [attribute]="selectedAttr" (attributeChange)="update($event)"></app-attribute-info>
+
+<h2 class="mat-headline">
+  Conditions
+  <button mat-raised-button (click)="addCondition()">New</button>
+</h2>
+<ul>
+  <li class="list-item" *ngFor="let cond of conditions" (click)="onSelectCond(cond)">
+    {{cond.getStr()}}
+  </li>
+</ul>
+
+<h2 class="mat-headline">
+  Aggregation
+  <button mat-raised-button (click)="addAggregation()">New</button>
+</h2>
+<ul>
+  <li class="list-item" *ngFor="let aggr of aggregations" (click)="onSelectAggr(aggr)">
+    {{aggr.getStr()}}
+  </li>
+</ul>
 <app-result [result]="resultQuery"></app-result>
+<button mat-raised-button (click)="sendQuery()">Send</button>
+<p>{{responseString}}</p>
+<mat-table #table [dataSource]="responseTableDataSource">
+  <ng-container *ngFor="let col of responseTableColumns" matColumnDef="{{col}}">
+    <mat-header-cell *matHeaderCellDef> {{col}} </mat-header-cell>
+    <mat-cell *matCellDef="let row"> {{row[col]}} </mat-cell>
+  </ng-container>
+  <!--<tr *ngFor="let row of responseObject">-->
+    <!--<td *ngFor="let col of responseColumns">{{ row[col] }}</td>-->
+  <!--</tr>-->
+  <mat-header-row *matHeaderRowDef="responseTableColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: responseTableColumns;"></mat-row>
+</mat-table>
