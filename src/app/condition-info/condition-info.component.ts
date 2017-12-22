@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Condition} from '../condition';
 
 @Component({
   selector: 'app-condition-info',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConditionInfoComponent implements OnInit {
 
-  constructor() { }
+  @Input() condition: Condition;
+  @Input() options: Array<String>;
+  @Output() attributeChange = new EventEmitter<boolean>();
 
+  constructor() { }
   ngOnInit() {
+  }
+  onInput() {
+    this.attributeChange.emit(true);
   }
 
 }

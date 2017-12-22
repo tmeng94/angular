@@ -1,3 +1,10 @@
-#list-item {
+/*.button-new {*/
+  /*width: 30px;*/
+/*}*/
+.object-link{
+  text-decoration: underline;
+  color: blue;
+}
+.object-link :hover {
   cursor: pointer;
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Aggregation} from '../aggregation';
 
 @Component({
   selector: 'app-aggregation-info',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AggregationInfoComponent implements OnInit {
 
-  constructor() { }
+  @Input() aggregation: Aggregation;
+  @Input() options: Array<String>;
+  @Input() aggrOptions: Array<String>;
+  @Output() attributeChange = new EventEmitter<boolean>();
 
+  constructor() { }
   ngOnInit() {
+  }
+  onInput() {
+    this.attributeChange.emit(true);
   }
 
 }

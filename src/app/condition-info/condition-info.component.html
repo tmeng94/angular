@@ -1,3 +1,47 @@
-<p>
-  condition-info works!
-</p>
+<div *ngIf="condition">
+  <h2 class="mat-headline">Detail of {{condition.getStr()}}:</h2>
+  <form>
+    <mat-autocomplete #autoFrom="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="condition.attr1.from"
+             name="Attribute 1 Table"
+             placeholder="Attribute 1 Table"
+             (input)="onInput()"
+             [matAutocomplete]="autoFrom"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="condition.attr1.name"
+             name="Attribute 1 Name"
+             placeholder="Attribute 1 Name"
+             (input)="onInput()" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="condition.operator"
+             name="Operator"
+             placeholder="Operator"
+             (input)="onInput()" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="condition.attr2.from"
+             name="Attribute 2 Table"
+             placeholder="Attribute 2 Table"
+             (input)="onInput()"
+             [matAutocomplete]="autoFrom"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="condition.attr2.name"
+             name="Attribute 2 Name"
+             placeholder="Attribute 2 Name"
+             (input)="onInput()" />
+    </mat-form-field>
+  </form>
+</div>

@@ -1,34 +1,57 @@
-<h1 class="mat-display-1">{{title}}</h1>
-<h2 class="mat-headline">
+<h2 class="mat-headline">{{title}}</h2>
+<h3 class="mat-title">Table Schemas From Server:</h3>
+<!--<code>-->
+  <!--<pre>{{schema | json}}</pre>-->
+<!--</code>-->
+<mat-list>
+  <mat-list-item *ngFor="let item of schema">
+    {{item.name + ": " + item.attrs}}
+  </mat-list-item>
+</mat-list>
+<h3 class="mat-title">
   Attributes
-  <button mat-raised-button (click)="addAttribute()">New</button>
-</h2>
-<ul>
-  <li class="list-item" *ngFor="let attr of attributes" (click)="onSelectAttr(attr)">
-    {{attr.getStr()}}
-  </li>
-</ul>
-<app-attribute-info [attribute]="selectedAttr" (attributeChange)="update($event)"></app-attribute-info>
+  <button mat-raised-button class="button-new" (click)="addAttribute()">New</button>
+</h3>
+<mat-list>
+  <mat-list-item *ngFor="let attr of attributes">
+    <span class="object-link" (click)="onRemoveAttr(attr)">Remove</span>
+    &nbsp;{{attr.getStr()}}&nbsp;
+    <span class="object-link" (click)="onSelectAttr(attr)">Detail</span>
+  </mat-list-item>
+</mat-list>
+<app-attribute-info [options]="tableOptions" [attribute]="selectedAttr" (attributeChange)="update($event)"></app-attribute-info>
 
-<h2 class="mat-headline">
+<h3 class="mat-title">
   Conditions
-  <button mat-raised-button (click)="addCondition()">New</button>
-</h2>
-<ul>
-  <li class="list-item" *ngFor="let cond of conditions" (click)="onSelectCond(cond)">
-    {{cond.getStr()}}
-  </li>
-</ul>
+  <button mat-raised-button class="button-new" (click)="addCondition()">New</button>
+</h3>
+<mat-list>
+  <mat-list-item *ngFor="let cond of conditions">
+    <span class="object-link" (click)="onRemoveCond(cond)">Remove</span>
+    &nbsp;{{cond.getStr()}}&nbsp;
+    <span class="object-link" (click)="onSelectCond(cond)">Detail</span>
+  </mat-list-item>
+</mat-list>
+<app-condition-info [options]="tableOptions" [condition]="selectedCond" (attributeChange)="update($event)"></app-condition-info>
 
-<h2 class="mat-headline">
+<h3 class="mat-title">
   Aggregation
-  <button mat-raised-button (click)="addAggregation()">New</button>
-</h2>
-<ul>
-  <li class="list-item" *ngFor="let aggr of aggregations" (click)="onSelectAggr(aggr)">
-    {{aggr.getStr()}}
-  </li>
-</ul>
+  <button mat-raised-button class="button-new" (click)="addAggregation()">New</button>
+</h3>
+<mat-list>
+  <mat-list-item *ngFor="let aggr of aggregations">
+    <span class="object-link" (click)="onRemoveAggr(aggr)">Remove</span>
+    &nbsp;{{aggr.getStr()}}&nbsp;
+    <span class="object-link" (click)="onSelectAggr(aggr)">Detail</span>
+  </mat-list-item>
+</mat-list>
+<app-aggregation-info
+  [aggrOptions]="aggrOptions"
+  [options]="tableOptions"
+  [aggregation]="selectedAggr"
+  (attributeChange)="update($event)">
+</app-aggregation-info>
+
 <app-result [result]="resultQuery"></app-result>
 <button mat-raised-button (click)="sendQuery()">Send</button>
 <p>{{responseString}}</p>

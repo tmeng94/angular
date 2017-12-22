@@ -1,3 +1,53 @@
-<p>
-  aggregation-info works!
-</p>
+<div *ngIf="aggregation">
+  <h2 class="mat-headline">Detail of {{aggregation.getStr()}}:</h2>
+  <form>
+    <mat-autocomplete #autoAggr="matAutocomplete">
+      <mat-option *ngFor="let option of aggrOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-autocomplete #autoFrom="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="aggregation.attr.from"
+             name="Aggregated Table"
+             placeholder="Aggregated Table"
+             (input)="onInput()"
+             [matAutocomplete]="autoFrom"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="aggregation.attr.name"
+             name="Aggregated Name"
+             placeholder="Aggregated Name"
+             (input)="onInput()" />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="aggregation.func"
+             name="Function"
+             placeholder="Function"
+             (input)="onInput()"
+             [matAutocomplete]="autoAggr"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="aggregation.groupBy.from"
+             name="Group By Table"
+             placeholder="Group By Table"
+             (input)="onInput()"
+             [matAutocomplete]="autoFrom"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="aggregation.groupBy.name"
+             name="Group By Name"
+             placeholder="Group By Name"
+             (input)="onInput()" />
+    </mat-form-field>
+  </form>
+</div>

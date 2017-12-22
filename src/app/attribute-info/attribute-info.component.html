@@ -1,12 +1,24 @@
 <div *ngIf="attribute">
-  <h2 class="mat-headline">Detail of {{attribute.from}}.{{attribute.name}}:</h2>
-  <!--<div><label>ID: </label>{{attribute.id}}</div>-->
+  <h2 class="mat-headline">Detail of {{attribute.getStr()}}:</h2>
   <form>
+    <mat-autocomplete #autoFrom="matAutocomplete">
+      <mat-option *ngFor="let option of options" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-autocomplete>
     <mat-form-field>
       <input matInput
              [(ngModel)]="attribute.from"
              name="From Table"
              placeholder="From Table"
+             (input)="onInput()"
+             [matAutocomplete]="autoFrom"/>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             [(ngModel)]="attribute.tableAlias"
+             name="Table Alias"
+             placeholder="Table Alias (can be blank)"
              (input)="onInput()" />
     </mat-form-field>
     <mat-form-field>
@@ -19,21 +31,9 @@
     <mat-form-field>
       <input matInput
              [(ngModel)]="attribute.alias"
-             name="Alias"
-             placeholder="Alias"
+             name="Attribute Alias"
+             placeholder="Attribute Alias (can be blank)"
              (input)="onInput()" />
     </mat-form-field>
   </form>
-  <!--<div>-->
-    <!--<label>Name: </label>-->
-    <!--<input [(ngModel)]="attribute.name" placeholder="Name" (input)="onInput()" />-->
-  <!--</div>-->
-  <!--<div>-->
-    <!--<label>From Table: </label>-->
-    <!--<input [(ngModel)]="attribute.from" placeholder="From Table" (input)="onInput()" />-->
-  <!--</div>-->
-  <!--<div>-->
-    <!--<label>Alias: </label>-->
-    <!--<input [(ngModel)]="attribute.alias" placeholder="Alias" (input)="onInput()" />-->
-  <!--</div>-->
 </div>

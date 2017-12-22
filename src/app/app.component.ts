@@ -48,7 +48,9 @@ export class AppComponent implements OnInit {
   selectedCond: Condition;
   selectedAggr: Aggregation;
 
-  schema: Object;
+  schema = [];
+  tableOptions = ['STRING', 'NUMBER'];
+  aggrOptions = ['COUNT', 'AVG', 'SUM', 'MIN', 'MAX'];
   resultQuery: Result;
   serverUrl = 'http://127.0.0.1:5555/dbserver';
   responseString = 'Initializing schema...';
@@ -73,15 +75,39 @@ export class AppComponent implements OnInit {
   onSelectAggr(aggr: Aggregation): void {
     this.selectedAggr = aggr;
   }
+  onRemoveAttr(attr: Attribute): void {
+    if (this.selectedAttr === attr) {
+      this.selectedAttr = null;
+    }
+    this.attributes.splice(this.attributes.indexOf(attr), 1);
+  }
+  onRemoveCond(cond: Condition): void {
+    if (this.selectedCond === cond) {
+      this.selectedCond = null;
+    }
+    this.conditions.splice(this.conditions.indexOf(cond), 1);
+  }
+  onRemoveAggr(aggr: Aggregation): void {
+    if (this.selectedAggr === aggr) {
+      this.selectedAggr = null;
+    }
+    this.aggregations.splice(this.aggregations.indexOf(aggr), 1);
+  }
   updateSchema(): void {
     this.http.get(this.serverUrl + '/schema').subscribe(
       res => {
         if ('result' in res) {
-          this.schema = res['result'];
+          for (const key of Object.keys(res['result'])) {
+            this.tableOptions.push(key);
+            this.schema.push({
+              name: key,
+              attrs: res['result'][key]
+            });
+          }
           console.log(this.schema);
           this.responseString = 'Click Send to execute query.';
         } else {
-          this.schema = {};
+          this.schema = [];
           if ('error' in res) {
             this.responseString = 'Schema error: ' + res['error'];
           } else {
@@ -128,14 +154,14 @@ export class AppComponent implements OnInit {
     this.http.post(this.serverUrl + '/query', this.resultQuery.query).subscribe(
       res => {
         if ('result' in res) {
-          this.responseObject = res['result'];
+          this.responseObject = res['result'][0];
+          this.responseString = 'Query finished.';
           if (this.responseObject.length > 0) {
-            this.responseTableColumns = Object.keys(res['result'][0]);
+            this.responseTableColumns = Object.keys(this.responseObject[0]);
           } else {
             this.responseTableColumns = [];
+            this.responseString += ' No results.'
           }
-            // this.responseString = JSON.stringify(res['result']);
-          this.responseString = 'Query finished.';
         } else {
           this.responseObject = [];
           this.responseTableColumns = [];

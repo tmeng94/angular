@@ -9,10 +9,10 @@ import { Attribute } from '../attribute';
 export class AttributeInfoComponent implements OnInit {
 
   @Input() attribute: Attribute;
+  @Input() options: Array<String>;
   @Output() attributeChange = new EventEmitter<boolean>();
 
   constructor() { }
-
   ngOnInit() {
   }
   onInput() {
