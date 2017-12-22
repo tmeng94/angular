@@ -1,11 +1,10 @@
 <h2 class="mat-headline">{{title}}</h2>
-<h3 class="mat-title">Table Schemas From Server:</h3>
-<!--<code>-->
-  <!--<pre>{{schema | json}}</pre>-->
-<!--</code>-->
+<p><button mat-raised-button (click)="chooseExample('selection_example')">Selection Example</button></p>
+<p><button mat-raised-button (click)="chooseExample('aggregation_example')">Aggregation Example</button></p>
+<h3 class="mat-title">Table Schemas:</h3>
 <mat-list>
   <mat-list-item *ngFor="let item of schema">
-    {{item.name + ": " + item.attrs}}
+    {{"Name=" + item.name + " Columns=" + item.attrs}}
   </mat-list-item>
 </mat-list>
 <h3 class="mat-title">
@@ -52,7 +51,6 @@
   (attributeChange)="update($event)">
 </app-aggregation-info>
 
-<app-result [result]="resultQuery"></app-result>
 <button mat-raised-button (click)="sendQuery()">Send</button>
 <p>{{responseString}}</p>
 <mat-table #table [dataSource]="responseTableDataSource">
@@ -60,9 +58,6 @@
     <mat-header-cell *matHeaderCellDef> {{col}} </mat-header-cell>
     <mat-cell *matCellDef="let row"> {{row[col]}} </mat-cell>
   </ng-container>
-  <!--<tr *ngFor="let row of responseObject">-->
-    <!--<td *ngFor="let col of responseColumns">{{ row[col] }}</td>-->
-  <!--</tr>-->
   <mat-header-row *matHeaderRowDef="responseTableColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: responseTableColumns;"></mat-row>
 </mat-table>

@@ -6,33 +6,54 @@ import {Aggregation} from './aggregation';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {MatTableDataSource} from '@angular/material';
 
-const ATTRIBUTES: Attribute[] = [
-  new Attribute('GameID', 'Game'),
-  new Attribute('Name', 'Game'),
-  new Attribute('Year_of_Release', 'Game'),
-  new Attribute('GenreName', 'Genre'),
-  new Attribute('PlatformName', 'Platform'),
-];
-
-const CONDITIONS: Condition[] = [
-  new Condition(
-    new Attribute('GenreID', 'Game'),
-    '=',
-    new Attribute('GenreID', 'Genre'),
-  ),
-  new Condition(
-    new Attribute('PlatformID', 'Game'),
-    '=',
-    new Attribute('PlatformID', 'Platform'),
-  ),
-  new Condition(
-    new Attribute('Year_of_Release', 'Game'),
-    '>=',
-    new Attribute('2016', 'NUMBER'),
-  ),
-];
-
-const AGGREGATIONS: Aggregation[] = [];
+const EXAMPLES: Object = {
+  selection_example: {
+    ATTRIBUTES: [
+      new Attribute('GameID', 'Game'),
+      new Attribute('Name', 'Game'),
+      new Attribute('Year_of_Release', 'Game'),
+      new Attribute('GenreName', 'Genre'),
+      new Attribute('PlatformName', 'Platform'),
+    ],
+    CONDITIONS: [
+      new Condition(
+        new Attribute('GenreID', 'Game'),
+        '=',
+        new Attribute('GenreID', 'Genre'),
+      ),
+      new Condition(
+        new Attribute('PlatformID', 'Game'),
+        '=',
+        new Attribute('PlatformID', 'Platform'),
+      ),
+      new Condition(
+        new Attribute('Year_of_Release', 'Game'),
+        '>=',
+        new Attribute('2016', 'NUMBER'),
+      ),
+    ],
+    AGGREGATIONS: []
+  },
+  aggregation_example: {
+    ATTRIBUTES: [
+      new Attribute('Year_of_Release', 'Game')
+    ],
+    CONDITIONS: [
+      new Condition(
+        new Attribute('Year_of_Release', 'Game'),
+        '>=',
+        new Attribute('2016', 'NUMBER'),
+      ),
+    ],
+    AGGREGATIONS: [
+      new Aggregation(
+        'COUNT',
+        new Attribute('Name', 'Game'),
+        new Attribute('Year_of_Release', 'Game'),
+      ),
+    ]
+  }
+};
 
 @Component({
   selector: 'app-root',
@@ -41,9 +62,9 @@ const AGGREGATIONS: Aggregation[] = [];
 })
 export class AppComponent implements OnInit {
   title = 'DB Project Query Builder';
-  attributes = ATTRIBUTES;
-  conditions = CONDITIONS;
-  aggregations = AGGREGATIONS;
+  attributes = [];
+  conditions = [];
+  aggregations = [];
   selectedAttr: Attribute;
   selectedCond: Condition;
   selectedAggr: Aggregation;
@@ -57,12 +78,12 @@ export class AppComponent implements OnInit {
   responseObject = [];
   responseTableDataSource: MatTableDataSource<Object>;
   responseTableColumns = [];
-  errorString = '';
 
   constructor(private http: HttpClient) {
   }
   ngOnInit(): void {
     this.resultQuery = new Result();
+    this.chooseExample('selection_example');
     this.updateSchema();
     this.updateQueryString();
   }
@@ -133,7 +154,16 @@ export class AppComponent implements OnInit {
       'conditions': this.conditions,
       'aggregations': this.aggregations
     };
-    // this.resultQuery.string = JSON.stringify(this.resultQuery.query);
+  }
+  chooseExample(example: string): void {
+    this.attributes = [];
+    this.conditions = [];
+    this.aggregations = [];
+    Object.assign(this.attributes, EXAMPLES[example].ATTRIBUTES);
+    Object.assign(this.conditions, EXAMPLES[example].CONDITIONS);
+    Object.assign(this.aggregations, EXAMPLES[example].AGGREGATIONS);
+    this.selectedAttr = this.selectedCond = this.selectedAggr = null;
+    this.updateQueryString();
   }
   addAttribute(): void {
     const newAttr = new Attribute();
