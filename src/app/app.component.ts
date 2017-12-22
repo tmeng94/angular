@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
   tableOptions = ['STRING', 'NUMBER'];
   aggrOptions = ['COUNT', 'AVG', 'SUM', 'MIN', 'MAX'];
   resultQuery: Result;
-  serverUrl = 'http://127.0.0.1:5555/dbserver';
+  serverUrl = 'http://155.94.147.149:5555/dbserver';
   responseString = 'Initializing schema...';
   responseObject = [];
   responseTableDataSource: MatTableDataSource<Object>;
